@@ -33,6 +33,7 @@ public class Picmaker {
             }
             writer.write(" ");
             writer.close();
+            System.out.println("Image File Name: mandel.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
