@@ -2,11 +2,20 @@ import java.io.*;
 import java.lang.Math;
 
 public class Picmaker {
-    public static boolean isElement(int a, int b) { //a + bi
+    public static boolean isElement(double a, double b) { //a + bi
         double x = 0.0;
         double y = 0.0;
+        //x + yi
+        //x^2 - y^2
+        //2xyi
         for (int i = 0; i < 1000; i++) {
-
+            x = x * x - y * y;
+            y = 2 * x * y;
+            x += a;
+            y += b;
+            if (x * x + y * y >= 2) {
+                return false;
+            }
         }
         return true;
     }
@@ -14,13 +23,14 @@ public class Picmaker {
     public static void main(String[] args) {
         try {
             FileWriter writer = new FileWriter("mandel.ppm");
-            String current = "P3 500 500 255\n";
-            writer.write(current);
-            for (int i = 250; i > -250; i--) { //x coord
-                for (int j = 250; j > -250; j--) { //y coord
-                    current = Math.abs(j) % 255 + " ";
-                    current += "0 0 ";
-                    writer.write(current);
+            writer.write("P3 400 400 255");
+            for (int i = 200; i > -200; i--) { //x coord
+                for (int j = 200; j > -200; j--) { //y coord
+                    if (isElement(j / 100.0, i / 100.0)) {
+                        writer.write(" 0 0 0");
+                    } else {
+                        writer.write(" 255 0 0");
+                    }
                 }
             }
             writer.close();
